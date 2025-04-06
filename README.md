@@ -1,19 +1,19 @@
-# 📦 HubSpot Integration API
+# HubSpot Integration API
 
 Esta aplicação foi desenvolvida para integrar com a API do HubSpot, recebendo eventos de criação de contatos via Webhook e permitindo a criação de contatos manualmente através de um endpoint protegido por autenticação OAuth2.
 
 ---
 
-## 🚀 Como executar a aplicação
+## Como executar a aplicação
 
-### ✅ Pré-requisitos
+### Pré-requisitos
 
 - Java 23+
 - Docker e Docker Compose
 - Maven 3.8+
 - IDE (recomendado: IntelliJ ou VSCode)
 
-### 🔧 Instruções
+### Instruções
 
 1. **Clone o repositório:**
    ```bash
@@ -49,7 +49,7 @@ Esta aplicação foi desenvolvida para integrar com a API do HubSpot, recebendo 
    ```
 ---
 
-## 📚 Endpoints principais
+## Endpoints principais
 
 - `POST /webhook/`: Recebe eventos de criação de contato do HubSpot.
 - `GET /webhook/allEvents`: Lista todos os eventos recebidos.
@@ -72,7 +72,7 @@ A documentação completa da API está disponível via Swagger:
 > ```
 > Após iniciar, cadastre a URL fornecida (ex: `https://1234-abc.ngrok.io/webhook/`) nas configurações do webhook no painel do HubSpot.
 
-## ⚙️ Principais tecnologias e bibliotecas
+## Principais tecnologias e bibliotecas
 
 | Tecnologia                     | Descrição                                                                                          |
 |-------------------------------|----------------------------------------------------------------------------------------------------|
@@ -90,7 +90,7 @@ A documentação completa da API está disponível via Swagger:
 
 ---
 
-## 🧠 Decisões técnicas
+## Decisões técnicas
 
 - **Spring Boot** foi escolhido pela sua produtividade, facilidade de configuração e integração com o ecossistema Spring.
 - **OAuth2 (Spring Security)** utilizado para autenticação segura, conforme exigência da API do HubSpot.
@@ -103,7 +103,7 @@ A documentação completa da API está disponível via Swagger:
 
 ---
 
-## 🔐 Segurança
+## Segurança
 
 - Endpoints como `/contact/create` são protegidos com token de autenticação OAuth.
 - Segurança customizada com `SecurityFilterChain` para desabilitar CSRF e configurar rotas públicas.
@@ -112,7 +112,7 @@ A documentação completa da API está disponível via Swagger:
 
 ---
 
-## 📈 Melhorias futuras
+## Melhorias futuras
 
 - 📂 **Salvar os tokens em banco de dados** para persistência entre sessões.
 - 🥪 **Testes unitários e de integração** com cobertura mínima de 80%.
@@ -122,7 +122,7 @@ A documentação completa da API está disponível via Swagger:
 
 ---
 
-## 👨‍💼 Autor
+## Autor
 
 Desenvolvido por [João Pedro Ramos](https://github.com/jpramosjp)
 
