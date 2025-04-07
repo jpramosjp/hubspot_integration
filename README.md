@@ -96,8 +96,7 @@ Esta aplicação foi desenvolvida para integrar com a API do HubSpot, recebendo 
          "lastname": "Doe",
          "phone": "(555) 555-5555",
          "company": "HubSpot",
-         "website": "hubspot.com",
-         "lifecyclestage": "marketingqualifiedlead"
+         "website": "hubspot.com"
       }
    }
 ```
