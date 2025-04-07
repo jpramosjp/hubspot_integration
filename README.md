@@ -112,7 +112,7 @@ Esta aplicação foi desenvolvida para integrar com a API do HubSpot, recebendo 
 
   **Funcionamento:**  
    Após ser acionada, essa rota envia os dados para a fila `contact.queue`, garantindo que o processamento ocorra de forma assíncrona e sem impactar a resposta ao usuário.  
-   A fila `contact.queue` realiza até **3 tentativas** de salvar as informações recebidas do HubSpot na tabela `create_contact_event`, garantindo a persistência dos dados no banco mesmo em caso de falhas temporárias.
+   A fila `contact.queue` realiza até **3 tentativas** de salvar as informações recebidas do HubSpot na tabela `contact_creation_event`, garantindo a persistência dos dados no banco mesmo em caso de falhas temporárias.
 
 </details>
 
@@ -123,7 +123,7 @@ Esta aplicação foi desenvolvida para integrar com a API do HubSpot, recebendo 
    Esse endpoint retorna todos os eventos armazenados que foram capturados via webhook de criação de contato.
 
   **Funcionamento:**  
-   Ao ser acionado, essa rota realiza uma consulta na tabela `event_contact_creation`, responsável por armazenar os dados recebidos do HubSpot.  
+   Ao ser acionado, essa rota realiza uma consulta na tabela `contact_creation_event`, responsável por armazenar os dados recebidos do HubSpot.  
    Os eventos são então retornados ao usuário, permitindo auditoria, visualização ou processamento adicional.
 
 </details>
