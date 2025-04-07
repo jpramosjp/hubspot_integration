@@ -8,10 +8,8 @@ Esta aplicação foi desenvolvida para integrar com a API do HubSpot, recebendo 
 
 ### Pré-requisitos
 
-- Java 23+
 - Docker e Docker Compose
-- Maven 3.8+
-- IDE (recomendado: IntelliJ ou VSCode)
+- Editor ou ambiente de preferência (recomendado: IntelliJ ou VSCode)
 
 ### Instruções
 
@@ -160,6 +158,8 @@ A documentação completa da API está disponível via Swagger:
 
 | Tecnologia                     | Descrição                                                                                          |
 |-------------------------------|----------------------------------------------------------------------------------------------------|
+| **Java 23**      | Versão mais recente da linguagem Java, com melhorias de desempenho e novos recursos. |
+| **Maven 3.8**     | Ferramenta de automação de builds usada para gerenciar dependências e facilitar a configuração de projetos. |
 | **Spring Boot**               | Framework Java para criação de aplicações web robustas com configuração mínima                     |
 | **Spring Security**           | Módulo de segurança da Spring para autenticação e autorização com suporte a OAuth2                |
 | **HikariCP**                  | Pool de conexões JDBC leve e de alta performance                                                   |
@@ -183,6 +183,7 @@ A documentação completa da API está disponível via Swagger:
 - **MySQL + JPA (Hibernate)** definidos para persistência confiável dos eventos recebidos, garantindo integridade e consistência dos dados.
 - **RabbitMQ** adotado para desacoplar o recebimento de eventos da etapa de persistência, promovendo resiliência e escalabilidade no processamento assíncrono.
 - **Redis** introduzido como cache in-memory para armazenar tokens e reduzir chamadas desnecessárias, melhorando a performance da aplicação.
+- **Docker Compose** Ferramenta usada para orquestrar e facilitar a instalação do projeto, iniciando automaticamente todos os serviços necessários ao subir os containers.
 
 
 ---
