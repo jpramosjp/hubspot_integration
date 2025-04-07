@@ -52,7 +52,7 @@ Esta aplicação foi desenvolvida para integrar com a API do HubSpot, recebendo 
    - **Usuário:** `root`  
    - **Senha:** `root`  
    - **Tabela:** `contact_creation_event`  
-      *(Utilizada para armazenar os eventos recebidos do HubSpot via webhook)*
+      *(Utilizada internamente para armazenar os eventos recebidos do HubSpot via webhook, com possibilidade de visualização dos dados por meio da rota `/webhook/allEvents`)*
 
    
 
