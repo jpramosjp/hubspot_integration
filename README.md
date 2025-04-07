@@ -25,10 +25,11 @@ Esta aplicação foi desenvolvida para integrar com a API do HubSpot, recebendo 
 
    Edite o arquivo `src/main/resources/application.properties` com suas credenciais da HubSpot:
 
-   ```
-   hubSpot.clientId=SEU_CLIENT_ID
+   ```properties
    hubSpot.clientSecret=SEU_CLIENT_SECRET
-   hubSpot.appId=SEU_APP_ID
+   hubSpot.clientId=SEU_CLIENT_ID
+   hubSpot.scope=SEU_SCOPE
+   hubSpot.redirectUri=SEU_REDIRECT_URI
    ```
 
 3. **Suba os serviços com Docker Compose:**
@@ -51,11 +52,83 @@ Esta aplicação foi desenvolvida para integrar com a API do HubSpot, recebendo 
 
 ## Endpoints principais
 
-- `POST /webhook/`: Recebe eventos de criação de contato do HubSpot.
-- `GET /webhook/allEvents`: Lista todos os eventos recebidos.
-- `POST /contact/create`: Cria um novo contato no HubSpot manualmente (requer Authorization header).
-- `GET /auth/`: Retorna a URL para iniciar o OAuth2 com o HubSpot.
-- `GET /auth/callback`: Callback do OAuth2 que armazena o token.
+### Clique para visualizar os detalhes de cada rota
+<details>
+  <summary><code>GET /auth/</code> – Retorna a URL para iniciar o OAuth2 com o HubSpot.</summary>
+
+  **Descrição:**  
+   Esse endpoint gera a URL de autenticação para iniciar o processo de conexão com o HubSpot via OAuth2.
+
+  **Funcionamento:**  
+   Quando acionado, ele constrói dinamicamente a URL de autorização utilizando as variáveis definidas no arquivo de propriedades, como `client_id`, `redirect_uri` e `scopes`, retornando a URL completa para o usuário iniciar o fluxo de autenticação.
+
+</details>
+<details>
+  <summary><code>GET /auth/callback</code> – Callback do OAuth2 que armazena o token.</summary>
+
+  **Descrição:**  
+   Esse endpoint é o callback chamado após a autenticação do usuário via URL gerada na rota `/auth/`.
+
+  **Funcionamento:**  
+   Quando acionado, ele envia uma requisição para a API do HubSpot utilizando o `code` recebido como parâmetro, a fim de obter o token de acesso.  
+   Em seguida, o token é armazenado no Redis para uso posterior na validação da rota protegida `/contact/create`.  
+   Por fim, o token também é retornado ao usuário para que possa ser utilizado em chamadas autenticadas.
+
+</details>
+
+<details>
+  <summary><code>POST /contact/create</code> – Cria um novo contato no HubSpot manualmente (requer Authorization header)</summary>
+
+  **Descrição:**  
+   Esse endpoint permite a criação manual de um contato no HubSpot por meio de uma requisição autenticada.
+
+  **Funcionamento:**  
+   Ao ser acionado, a requisição passa por um filtro que valida o token enviado no header `Authorization`, verificando se ele é válido e se ainda não expirou.  
+   Em caso de validação bem-sucedida, os dados do contato são enviados para a API do HubSpot para efetuar a criação.  
+   Esta rota possui um **rate limit de 100 requisições por minuto**, seguindo as limitações impostas pela própria API do HubSpot.
+
+ **Exemplo de corpo da requisição:**
+   ``` json 
+      {
+      "properties": {
+         "email": "example@hubspot.com",
+         "firstname": "Jane",
+         "lastname": "Doe",
+         "phone": "(555) 555-5555",
+         "company": "HubSpot",
+         "website": "hubspot.com",
+         "lifecyclestage": "marketingqualifiedlead"
+      }
+   }
+```
+</details>
+
+
+<details>
+  <summary><code>POST /webhook/</code> – Recebe eventos de criação de contato do HubSpot.</summary>
+
+  **Descrição:**  
+   Esse endpoint é chamado pelo HubSpot quando um novo contato é criado.
+
+  **Funcionamento:**  
+   Após ser acionada, essa rota envia os dados para a fila `contact.queue`, garantindo que o processamento ocorra de forma assíncrona e sem impactar a resposta ao usuário.  
+   A fila `contact.queue` realiza até **3 tentativas** de salvar as informações recebidas do HubSpot na tabela `create_contact_event`, garantindo a persistência dos dados no banco mesmo em caso de falhas temporárias.
+
+</details>
+
+<details>
+  <summary><code>GET /webhook/allEvents</code> – Lista todos os eventos recebidos</summary>
+
+  **Descrição:**  
+   Esse endpoint retorna todos os eventos armazenados que foram capturados via webhook de criação de contato.
+
+  **Funcionamento:**  
+   Ao ser acionado, essa rota realiza uma consulta na tabela `event_contact_creation`, responsável por armazenar os dados recebidos do HubSpot.  
+   Os eventos são então retornados ao usuário, permitindo auditoria, visualização ou processamento adicional.
+
+</details>
+
+
 
 A documentação completa da API está disponível via Swagger:
 📄 [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
@@ -114,7 +187,6 @@ A documentação completa da API está disponível via Swagger:
 
 ## Melhorias futuras
 
-- 📂 **Salvar os tokens em banco de dados** para persistência entre sessões.
 - 🥪 **Testes unitários e de integração** com cobertura mínima de 80%.
 - 🔐 **Refresh automático de tokens OAuth** antes do vencimento.
 - 📊 **Dashboard de monitoramento** para exibir eventos recebidos.
