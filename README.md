@@ -198,12 +198,10 @@ A documentação completa da API está disponível via Swagger:
 ---
 
 ## Melhorias futuras
-
-- 🥪 **Testes unitários e de integração** com cobertura mínima de 80%.
-- 🔐 **Refresh automático de tokens OAuth** antes do vencimento.
+- 🔐 **Configurar senha no Redis**, adicionando senha para reforçar a segurança no acesso aos tokens.
+- 🧪 **Testes unitários e de integração** com cobertura mínima de 80%.
+- 🔄 **Refresh automático de tokens OAuth** antes do vencimento.
 - 📊 **Dashboard de monitoramento** para exibir eventos recebidos.
-- ↺ **Retries automáticos para falhas na criação de contatos.**
-
 ---
 
 ## Autor
