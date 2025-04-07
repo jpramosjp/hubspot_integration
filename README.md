@@ -34,15 +34,27 @@ Esta aplicação foi desenvolvida para integrar com a API do HubSpot, recebendo 
 
 3. **Suba os serviços com Docker Compose:**
    ```bash
-   docker-compose up --build
+   docker-compose up -d --build
    ```
 
 4. **Acesse os serviços:**
 
-   - API: [http://localhost:8080](http://localhost:8080)
-   - Documentação Swagger: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
-   - RabbitMQ: [http://localhost:15672](http://localhost:15672) (login: `guest` / `guest`)
-   - Redis: Porta `6379` (uso interno ou via cliente Redis)
+- **API:** [http://localhost:8080](http://localhost:8080)
+- **Documentação Swagger:** [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+- **RabbitMQ:** [http://localhost:15672](http://localhost:15672)  
+  *(Login: `guest` / Senha: `guest`)*
+- **Redis:** Porta `6379`  
+  *(Utilizado internamente pela aplicação ou acessível via cliente Redis)*
+- **MySQL:**
+   - **Host:** `localhost`  
+   - **Porta:** `3306`  
+   - **Banco de dados:** `meubanco`  
+   - **Usuário:** `root`  
+   - **Senha:** `root`  
+   - **Tabela:** `contact_creation_event`  
+      *(Utilizada para armazenar os eventos recebidos do HubSpot via webhook)*
+
+   
 
 5. **Para parar os containers:**
    ```bash
